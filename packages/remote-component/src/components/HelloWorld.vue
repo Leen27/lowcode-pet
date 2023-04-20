@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import thumbnail from '@/assets/bar_x.png'
+import VText from './text/material.vue'
 
 defineProps<{ msg: string }>()
 
@@ -8,6 +9,7 @@ const count = ref(0)
 </script>
 
 <template>
+  <v-text />
   <h1>{{ msg }}</h1>
   <img :src="thumbnail" />
   <div class="card">

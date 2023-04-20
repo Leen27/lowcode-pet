@@ -17,7 +17,13 @@
             </div>
         </div>
         <div class="w-full h-full bg-green-50 border border-light-800">
-            body
+            <remote-text></remote-text>
         </div>
     </div>
+    
 </template>
+<script setup lang="ts">import { defineAsyncComponent } from "vue";
+
+const RemoteText = defineAsyncComponent(() => import("remote-component/text"));
+
+</script>
