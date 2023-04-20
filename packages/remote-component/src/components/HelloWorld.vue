@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import thumbnail from '@/assets/bar_x.png'
 
 defineProps<{ msg: string }>()
 
@@ -8,7 +9,7 @@ const count = ref(0)
 
 <template>
   <h1>{{ msg }}</h1>
-
+  <img :src="thumbnail" />
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
     <p>
