@@ -22,11 +22,12 @@ export default defineConfig({
 
     // 联邦模块
     federation({
-      name: 'remote-component',
+      name: './remote-component',
       filename: 'remoteEntry.js',
       // Modules to expose
       exposes: {
-          './text': './src/components/text/material.vue',
+          './remote-text.js': './src/components/text/material.vue',
+          './remote-image.js': './src/components/image/material.vue',
       },
       shared: ['vue']
     })
