@@ -23,15 +23,13 @@
     
 </template>
 <script setup lang="ts">
-import { defineAsyncComponent, onMounted, shallowRef } from "vue";
-// import { fetchComponent } from './loader'
+import { onMounted, shallowRef } from "vue";
 import componentLoader from "component-loader"
 const compRef = shallowRef<any>(null)
 
 onMounted(async () => {
-    const remoteText = await componentLoader.load('remote-image.js')
-
-    setTimeout(() => {
+    setTimeout(async () => {
+        const remoteText = await componentLoader.load('./remote-image.js')
         compRef.value = remoteText
     }, 3000)
 })

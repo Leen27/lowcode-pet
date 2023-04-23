@@ -45,6 +45,7 @@ importers:
       '@vitejs/plugin-vue': ^4.1.0
       autoprefixer: ^10.4.14
       component-loader: workspace:*
+      load-js: ^3.1.1
       postcss: ^8.4.22
       tailwindcss: ^3.3.1
       tsconfig: workspace:*
@@ -58,6 +59,7 @@ importers:
       '@vitejs/plugin-vue': 4.1.0_vite@4.2.1+vue@3.2.47
       autoprefixer: 10.4.14_postcss@8.4.22
       component-loader: link:../../packages/component-loader
+      load-js: 3.1.1
       postcss: 8.4.22
       tailwindcss: 3.3.1_postcss@8.4.22
       tsconfig: link:../../packages/tsconfig
@@ -93,11 +95,13 @@ importers:
     specifiers:
       '@originjs/vite-plugin-federation': ^1.2.2
       '@vitejs/plugin-vue': ^4.1.0
+      load-js: ^3.1.1
       tsconfig: workspace:*
       vite: ^4.2.0
       vue: ^3.2.47
       vue-tsc: ^1.2.0
     dependencies:
+      load-js: 3.1.1
       vue: 3.2.47
     devDependencies:
       '@originjs/vite-plugin-federation': 1.2.2
@@ -2252,6 +2256,9 @@ packages:
   /lines-and-columns/1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
     dev: true
+
+  /load-js/3.1.1:
+    resolution: {integrity: sha512-yAZcLdKtq/9e3rE8A+c6noD/M++6vryP5A96axcM8NReISX3tzTCHUS8apToXzToaPs9LlApqxfa5uCDBuv+SQ==}
 
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
