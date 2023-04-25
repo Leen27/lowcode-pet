@@ -9,13 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "component-loader": "workspace:*"
   },
   "devDependencies": {
     "@originjs/vite-plugin-federation": "^1.2.2",
     "@vitejs/plugin-vue": "^4.1.0",
     "autoprefixer": "^10.4.14",
-    "component-loader": "workspace:*",
     "load-js": "^3.1.1",
     "postcss": "^8.4.22",
     "tailwindcss": "^3.3.1",

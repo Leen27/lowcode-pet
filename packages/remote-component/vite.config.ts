@@ -28,11 +28,13 @@ export default defineConfig({
       exposes: {
           './remote-text.js': './src/components/text/material.vue',
           './remote-image.js': './src/components/image/material.vue',
+          './remote-box.js': './src/components/box/material.vue',
       },
       shared: ['vue']
     })
   ],
   resolve: {
+    dedupe: ['vue'],
     alias: [
       {
         find: /\/#\//,
@@ -44,4 +46,14 @@ export default defineConfig({
       },
     ]
   },
+  build: {
+    rollupOptions: {
+      external: ['vue'],
+      output: {
+        globals: {
+          vue: 'Vue'
+        },
+      }
+    }
+  }
 })

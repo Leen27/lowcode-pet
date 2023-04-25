@@ -7,53 +7,74 @@
     
     <div class="w-100 h-screen bg-yellow-100 flex items-start">
         <div class="w-[100px] h-full bg-gray-300">
-            <div draggable="true" class="w-[80px] h-[80px] rounded-lg border border-light-800">
-                容器
-            </div>
-            <div class="w-[80px] h-[80px] rounded-lg border border-light-800">
-                cat1
-            </div>
-            <div class="w-[80px] h-[80px] rounded-lg border border-light-800">
-                dog
-            </div>
-            <div class="w-[80px] h-[80px] rounded-lg border border-light-800">
-                echart
+            <div
+                v-for="item in compCategory"
+                :key="item.key"
+                draggable="true"
+                class="w-[80px] h-[80px] rounded-lg border border-light-800"
+                @dragstart="dragHook.dragStartHandle($event, item)"
+            >
+                {{ item.key }}
             </div>
         </div>
-        <div class="w-full h-full bg-green-50 border border-light-800">
-            <component :is="compRef" v-if="compRef"></component>
-            <v-box />
+        <div
+            class="w-full h-full bg-green-50 border border-light-800"
+            @dragover="dragHook.dragoverHandle"
+            @drop="dragHook.dropHandle($event, dropCallback)"
+        >
+        {{ compList }}
+            <remote-box v-for="item in compList" :key="item.key" :style="item.style">
+                <component :is="item.comp" v-if="item.comp"></component>
+            </remote-box>
         </div>
     </div>
     
 </template>
 <script setup lang="ts">
-import { onMounted, shallowRef } from "vue";
+import { onMounted, shallowRef, ref, markRaw } from 'vue'
 import componentLoader from "component-loader"
-import VBox from './Box.vue';
+import remoteBox from './remote-component/remote-box.js'
+import { useCompRepo, TCompCategory } from '@/service/api.adapter'
+import { useDrag } from '@/hooks/useDrag.hook'
+
+const compRepo = useCompRepo()
+const dragHook = useDrag()
+
+type TCompList = {
+    comp: any;
+    key: string;
+    style: {
+        x: number,
+        y: number
+    }
+}[]
+
 const compRef = shallowRef<any>(null)
+const boxRef = shallowRef<any>(null)
+const compList = ref<TCompList>([])
+const compCategory = shallowRef<TCompCategory[]>([])
+
+const dropCallback = async ({ x, y, data }: { x: number, y: number, data: TCompCategory }) => {
+    const remoteComp = await componentLoader.load(data.pkgUrl)
+    // compRef.value = remoteComp
+
+    console.log(data, x, y, remoteComp)
+
+    compList.value.push({
+        comp: markRaw(remoteComp),
+        key: data.key,
+        style: {
+            x,
+            y
+        }
+    })
+}
 
 onMounted(async () => {
-    setTimeout(async () => {
-        const remoteText = await componentLoader.load('./remote-image.js')
-        compRef.value = remoteText
-    }, 3000)
+    const result = await compRepo.getCategory()
 
-    // Select the DOM-element, so that you can replace it with content
-    let PROJECT_ID = "b9k2lt78";
-    let DATASET = "production";
-    let QUERY = encodeURIComponent(`
-        *[_type == "pet"]{_id, name}
-    `);
+    if (!result) return
 
-    // Compose the URL for your project's endpoint and add the query
-    let PROJECT_URL = `https://${PROJECT_ID}.api.sanity.io/v2021-10-21/data/query/${DATASET}?query=${QUERY}`;
-
-    // fetch the content
-    fetch(PROJECT_URL)
-    .then((res) => res.json())
-    .then(({ result }) => {
-        console.log(result, '2222')
-    })
+    compCategory.value = result
 })
 </script>

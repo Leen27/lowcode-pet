@@ -1,6 +1,7 @@
 import { defineConfig, Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import federation from "@originjs/vite-plugin-federation";
+import { resolve } from 'path'
 export interface Options {
   depMap: DepMap;
 }
@@ -43,8 +44,33 @@ export function remoteImport(options: Options | DepMap): Plugin {
   };
 }
 
+function pathResolve(dir: string) {
+  return resolve(process.cwd(), '.', dir)
+}
+
 // https://vitejs.dev/config/
 export default defineConfig({
+  // resolve: {
+  //   alias: [
+  //     {
+  //       find: "@vue/runtime-core",
+  //       replacement: "@vue/runtime-core/dist/runtime-core.esm-bundler.js",
+  //     },
+  //   ],
+  // },
+  resolve: {
+    dedupe: ['vue'],
+    alias: [
+      {
+        find: /\/#\//,
+        replacement: pathResolve('types')
+      },
+      {
+        find: '@',
+        replacement: pathResolve('src')
+      },
+    ]
+  },
   plugins: [
     vue(),
     // remoteImport({
@@ -66,9 +92,9 @@ export default defineConfig({
     minify: false,
     cssCodeSplit: true,
     rollupOptions: {
-        output: {
-            minifyInternalExports: false
-        }
+      output: {
+        minifyInternalExports: false
+      }
     }
   }
 })
