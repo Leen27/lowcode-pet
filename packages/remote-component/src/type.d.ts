@@ -1,5 +1,6 @@
 // 组件配置
-export type ConfigType = {
+export type TConfigType = {
     key: string
-    thumbnail: string | (() => Promise<typeof import('*.png')>)
+    material: any
+    configView: any
 }

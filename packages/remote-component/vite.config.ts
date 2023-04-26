@@ -26,9 +26,9 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       // Modules to expose
       exposes: {
-          './remote-text.js': './src/components/text/material.vue',
-          './remote-image.js': './src/components/image/material.vue',
           './remote-box.js': './src/components/box/material.vue',
+          './remote.js': './src/components/index.ts',
+          './remote-preload.js': './src/components/preload.ts'
       },
       shared: ['vue']
     })

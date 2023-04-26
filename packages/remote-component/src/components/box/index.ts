@@ -1,7 +1,9 @@
-import thumbnail from '@/assets/bar_x.png'
-import { ConfigType } from '@/type.d'
+import { TConfigType } from '@/type.d'
+import Material from './material.vue'
+import ConfigView from './config.vue'
 
-export const BoxConfig: ConfigType = {
-    key: 'Box',
-    thumbnail
+export const BoxConfig: TConfigType = {
+    key: 'box',
+    material: Material,
+    configView: ConfigView
 }
