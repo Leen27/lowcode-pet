@@ -1,11 +1,16 @@
 <template>
-    <div>{{ props.name }}</div>
+    <div class="text">{{ props.data?.name }}</div>
 </template>
 
 <script setup lang="ts">
 type TProps = {
-    name: string
+    data: any
 }
 
-const props = withDefaults(defineProps<TProps>(), { name: '' });
+const props = withDefaults(defineProps<TProps>(), { data: {} });
 </script>
+<style scoped>
+.text {
+    border: 1px solid #ddd;
+}
+</style>

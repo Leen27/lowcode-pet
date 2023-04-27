@@ -1,15 +1,15 @@
 <template>
-    <div>
-        <input v-model="name" />
+    <div class="text">
+        <input v-model="props.data.name" />
     </div>
 </template>
 <script setup lang="ts">
 type TProps = {
-    comp: any
+    data: any
 }
 
 const props = defineProps<TProps>();
-
-import { ref } from 'vue'
-const name = ref('')
 </script>
+<style scoped>
+
+</style>

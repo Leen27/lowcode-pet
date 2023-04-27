@@ -22,15 +22,24 @@
             @dragover="dragHook.dragoverHandle"
             @drop="dragHook.dropHandle($event, dropCallback)"
         >
-        {{ compList }}
+        {{ compList }} #1
             <remote-box
                 v-for="item in compList"
                 :key="item.key"
                 :style="item.style"
                 @click="handleSelectComp(item)"
+                :data="item.data"
             >
-                <component :is="item.comp" v-if="item.comp"></component>
+                <component :is="item.comp" v-if="item.comp" :data="item.data"></component>
             </remote-box>
+
+            <!-- <component
+                v-for="item in compList"
+                :key="item.key"
+                :is="item.comp"
+                :name="'text'"
+            ></component> -->
+
         </div>
         <div class="w-[400px] h-full bg-gray-300">
             {{ state.selectedComp }} #{{ state?.selectedComp?.config }}#
@@ -38,6 +47,7 @@
                 v-if="state?.selectedComp?.config"
                 :is="state.selectedComp.config"
                 :comp="state.selectedComp.comp"
+                :data="state.selectedComp.data"
             ></component>
         </div>
     </div>
@@ -57,6 +67,7 @@ type TCompCreated = {
     comp: any;
     config: any;
     key: string;
+    data: any;
     style: {
         x: number,
         y: number
@@ -78,10 +89,13 @@ const state = reactive<TState>({
 
 const dropCallback = async ({ x, y, data }: { x: number, y: number, data: TCompCategory }) => {
     const remoteCompConfig = await componentLoader.load(data.key)
-    console.log(remoteCompConfig, 'remoteCompConfig')
+
+    const dataRef = ref({})
+
     compList.value.push({
         comp: markRaw(remoteCompConfig.material),
         config: markRaw(remoteCompConfig.configView),
+        data: dataRef,
         key: data.key,
         style: {
             x,
